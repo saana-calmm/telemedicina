@@ -8,7 +8,7 @@ import styles from "../styles/Home.module.css";
 const Home: NextPage = () => {
   const router = useRouter();
   const { query } = router;
-  console.log("query", query);
+  const { id } = query;
   return (
     <div className={styles.container}>
       <Head>
@@ -18,7 +18,7 @@ const Home: NextPage = () => {
       </Head>
 
       <main className={styles.main}>
-        <VideoChat />
+        <VideoChat id={id as string} />
       </main>
     </div>
   );
