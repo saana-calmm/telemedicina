@@ -43,3 +43,14 @@
   width: 100%;
   color: white;
 }
+@media screen and (max-width: 768px) {
+  .container video {
+    height: 300px;
+    width: 100px;
+    right: 1px;
+    top: 1px;
+  }
+  .me {
+    display: none;
+  }
+}

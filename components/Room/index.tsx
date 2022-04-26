@@ -1,4 +1,3 @@
-import Footer from "@app/Footer";
 import ParticipantSecondary from "@app/ParticipantSecondary";
 import React, { useEffect, useState } from "react";
 import Participant from "../Participant";
@@ -21,11 +20,9 @@ const Room = ({ roomName, room, handleLogout }) => {
     const videoTracks = trackpubsToTracks(room.localParticipant.videoTracks);
     const track = videoTracks[0];
     if (track.isEnabled) {
-      console.log("Video Muted");
       track.disable();
       setVideoMuted(true);
     } else {
-      console.log("Video Disabled");
       track.enable();
       setVideoMuted(false);
     }
@@ -64,7 +61,7 @@ const Room = ({ roomName, room, handleLogout }) => {
   }, [room]);
 
   return (
-    <div>
+    <div className={styles.container}>
       <div className={styles.remoteParticipants}>
         {room && (
           <ParticipantSecondary
