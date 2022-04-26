@@ -1,0 +1,45 @@
+.container {
+  position: fixed;
+  right: 2rem;
+  z-index: 999999;
+}
+.container video {
+  position: relative;
+  right: 2rem;
+  z-index: 999999;
+  height: 300px;
+  width: 300px;
+  top: 4rem;
+}
+.name {
+  font-size: 18px;
+  color: white;
+  text-transform: capitalize;
+}
+.video {
+  position: relative;
+  border-radius: 10px;
+}
+.contentName {
+  position: absolute;
+  bottom: -4rem;
+  z-index: 9999999999;
+  display: flex;
+  width: 100%;
+  right: 2rem;
+}
+.containerController {
+  display: flex;
+  align-items: center;
+}
+.icon {
+  margin-right: 1rem;
+}
+.me {
+  position: absolute;
+  bottom: 0;
+  z-index: 9999999999;
+  display: flex;
+  width: 100%;
+  color: white;
+}

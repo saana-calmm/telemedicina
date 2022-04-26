@@ -1,8 +1,47 @@
+import Footer from "@app/Footer";
+import ParticipantSecondary from "@app/ParticipantSecondary";
 import React, { useEffect, useState } from "react";
 import Participant from "../Participant";
+import styles from "./styles.module.css";
 
 const Room = ({ roomName, room, handleLogout }) => {
   const [participants, setParticipants] = useState([]);
+  const [audioMuted, setAudioMuted] = useState(false);
+  const [videoMuted, setVideoMuted] = useState(false);
+
+  const trackpubsToTracks = (trackMap) => {
+    const tracksArr = Array.from(trackMap.values())
+      .map((publication: any) => publication.track)
+      .filter((track) => track !== null);
+    console.log(tracksArr);
+    return tracksArr;
+  };
+
+  const handleVideoToggle = () => {
+    const videoTracks = trackpubsToTracks(room.localParticipant.videoTracks);
+    const track = videoTracks[0];
+    if (track.isEnabled) {
+      console.log("Video Muted");
+      track.disable();
+      setVideoMuted(true);
+    } else {
+      console.log("Video Disabled");
+      track.enable();
+      setVideoMuted(false);
+    }
+  };
+
+  const handleAudioToggle = () => {
+    const audioTracks = trackpubsToTracks(room.localParticipant.audioTracks);
+    const track = audioTracks[0];
+    if (track.isEnabled) {
+      track.disable();
+      setAudioMuted(true);
+    } else {
+      track.enable();
+      setAudioMuted(false);
+    }
+  };
 
   useEffect(() => {
     const participantConnected = (participant) => {
@@ -24,21 +63,33 @@ const Room = ({ roomName, room, handleLogout }) => {
     };
   }, [room]);
 
-  const remoteParticipants = participants.map((participant) => (
-    <Participant
-      key={participant.sid}
-      handleLogout={() => console.log("cerrar")}
-      participant={participant}
-    />
-  ));
-
   return (
-    <div className="room">
-      <Participant
-        handleLogout={handleLogout}
-        key={room.localParticipant.sid}
-        participant={room.localParticipant}
-      />
+    <div>
+      <div className={styles.remoteParticipants}>
+        {room && (
+          <ParticipantSecondary
+            audioMuted={audioMuted}
+            videoMuted={videoMuted}
+            participant={room.localParticipant}
+          />
+        )}
+      </div>
+
+      {participants &&
+        participants.length > 0 &&
+        participants.map((participant) => {
+          return (
+            <Participant
+              audioMuted={audioMuted}
+              videoMuted={videoMuted}
+              key={participant.sid}
+              handleLogout={handleLogout}
+              participant={participant}
+              handleMutedVideo={handleVideoToggle}
+              handleMuted={handleAudioToggle}
+            />
+          );
+        })}
     </div>
   );
 };

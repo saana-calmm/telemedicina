@@ -4,7 +4,13 @@ import Video from "twilio-video";
 import Lobby from "../Lobby";
 import Room from "../Room";
 
-const VideoChat = ({ id }: { id: string }) => {
+const VideoChat = ({
+  id,
+  doctor = false,
+}: {
+  id: string;
+  doctor?: boolean;
+}) => {
   const { generateTokenRoom } = generateVideoToken();
   const [roomName, setRoomName] = useState("");
   const [room, setRoom] = useState(null);
@@ -18,7 +24,7 @@ const VideoChat = ({ id }: { id: string }) => {
         variables: {
           input: {
             appointment: id,
-            isDoctor: false,
+            isDoctor: doctor,
           },
         },
       });
@@ -35,7 +41,7 @@ const VideoChat = ({ id }: { id: string }) => {
           setConnecting(false);
         });
     },
-    [generateTokenRoom, id, roomName]
+    [doctor, generateTokenRoom, id, roomName]
   );
 
   const handleLogout = useCallback(() => {
@@ -75,7 +81,13 @@ const VideoChat = ({ id }: { id: string }) => {
       <Room roomName={roomName} room={room} handleLogout={handleLogout} />
     );
   } else {
-    render = <Lobby handleSubmit={handleSubmit} connecting={connecting} />;
+    render = (
+      <Lobby
+        doctor={doctor}
+        handleSubmit={handleSubmit}
+        connecting={connecting}
+      />
+    );
   }
   return render;
 };

@@ -6,9 +6,11 @@ import styles from "./styles.module.css";
 const Lobby = ({
   handleSubmit,
   connecting,
+  doctor,
 }: {
   handleSubmit: (e: any) => void;
   connecting: boolean;
+  doctor: boolean;
 }) => {
   const router = useRouter();
   const { query } = router;
@@ -22,16 +24,29 @@ const Lobby = ({
     <form onSubmit={handleSubmit} className={styles.container}>
       <div className={styles.cardInformation}>
         <h2>
-          {"Bienvenido a saana,"} {appointment?.user?.firstName}
+          {"Bienvenido a saana,"}{" "}
+          {doctor ? appointment?.doctor?.name : appointment?.user?.firstName}
         </h2>
         <div className={styles.separator} />
-        <ul className={styles.list}>
-          <li>Tu cita es: {appointment?.schedulingDate}</li>
-          <li>A las: {appointment?.hour}</li>
-          <li>De la especialidad: {appointment?.specialty?.name}</li>
-          <li>Con el doctor(a): {appointment?.doctor?.name}</li>
-          <li>Nota: Por favor tener a la mano lápiz y papel</li>
-        </ul>
+
+        {doctor ? (
+          <ul className={styles.list}>
+            <li>Tu cita es: {appointment?.schedulingDate}</li>
+            <li>A las: {appointment?.hour}</li>
+            <li>De la especialidad: {appointment?.specialty?.name}</li>
+            <li>Con el paciente: {appointment?.user?.firstName}</li>
+            <li>Feliz jornada</li>
+          </ul>
+        ) : (
+          <ul className={styles.list}>
+            <li>Tu cita es: {appointment?.schedulingDate}</li>
+            <li>A las: {appointment?.hour}</li>
+            <li>De la especialidad: {appointment?.specialty?.name}</li>
+            <li>Con el doctor(a): {appointment?.doctor?.name}</li>
+            <li>Nota: Por favor tener a la mano lápiz y papel</li>
+          </ul>
+        )}
+
         <div className={styles.separator} />
         <div className={styles.footerButton}>
           <button

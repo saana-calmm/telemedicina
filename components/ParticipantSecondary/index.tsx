@@ -1,16 +1,9 @@
-import Footer from "@app/Footer";
-import Header from "@app/Header";
 import React, { useState, useEffect, useRef } from "react";
+import MicroCallMuted from "svg/microCallMuted";
+import VideoCallMuted from "svg/videoCallMuted";
 import styles from "./styles.module.css";
 
-const Participant = ({
-  participant,
-  handleLogout,
-  audioMuted,
-  videoMuted,
-  handleMutedVideo,
-  handleMuted,
-}) => {
+const ParticipantSecondary = ({ participant, audioMuted, videoMuted }) => {
   const [videoTracks, setVideoTracks] = useState([]);
   const [audioTracks, setAudioTracks] = useState([]);
 
@@ -74,21 +67,27 @@ const Participant = ({
 
   return (
     <div className={styles.container}>
-      <Header />
-      <video ref={videoRef} autoPlay={true} />
-      <audio ref={audioRef} autoPlay={true} muted={false} />
-      <div className={styles.doctor}>
-        <h2>{participant?.identity}</h2>
+      <div className={styles.video}>
+        <video ref={videoRef} autoPlay />
+        <audio ref={audioRef} autoPlay muted />
+        <div className={styles.me}>{"TU"}</div>
+        <div className={styles.contentName}>
+          <div className={styles.containerController}>
+            {audioMuted && (
+              <div className={styles.icon}>
+                <MicroCallMuted />
+              </div>
+            )}
+            {videoMuted && (
+              <div className={styles.icon}>
+                <VideoCallMuted />
+              </div>
+            )}
+          </div>
+        </div>
       </div>
-      <Footer
-        handleMuted={handleMuted}
-        handleMutedVideo={handleMutedVideo}
-        handleLogout={handleLogout}
-        audioMuted={audioMuted}
-        videoMuted={videoMuted}
-      />
     </div>
   );
 };
 
-export default Participant;
+export default ParticipantSecondary;
