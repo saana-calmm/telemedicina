@@ -57,3 +57,16 @@
   font-size: 18px;
   cursor: pointer;
 }
+@media screen and (max-width: 768px) {
+  .cardInformation {
+    padding: 1rem;
+    border-radius: 20px;
+    margin: 0 1rem;
+  }
+  .cardInformation h2 {
+    font-size: 18px;
+  }
+  .list li {
+    font-size: 14px;
+  }
+}
